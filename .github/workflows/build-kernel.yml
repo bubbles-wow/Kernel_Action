@@ -76,9 +76,9 @@ jobs:
     - name: Download LLVM
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir LLVM
+        mkdir LLVM-21.1.0-Linux-ARM64
         wget https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.0/LLVM-21.1.0-Linux-X64.tar.xz
-        tar -C LLVM/ -zxvf LLVM-21.1.0-Linux-X64.tar.xz
+        tar -C LLVM-21.1.0-Linux-ARM64/ -zxvf LLVM-21.1.0-Linux-X64.tar.xz
 
 
     - name: Download mkbootimg tools
@@ -100,7 +100,7 @@ jobs:
     - name: Build kernel
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        export PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM/bin:$PATH
+        export PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM-21.1.0-Linux-ARM64/bin:$PATH
         export KBUILD_BUILD_HOST=Github-Action
         export KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
         export LLVM=1
