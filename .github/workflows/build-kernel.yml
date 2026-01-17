@@ -71,7 +71,7 @@ jobs:
         echo "DEVICE=$(echo ${{ env.KERNEL_CONFIG }} | sed 's!vendor/!!;s/_defconfig//;s/_user//;s/-perf//')" >> $GITHUB_ENV
         sudo apt-get update
         sudo apt-get install git automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3
-        sudo apt-get install ccache git-lfs gnupg imagemagick libelf-dev libncurses5-dev libsdl1.2-dev rsync adb fastboot libstdc++6 gcc-multilib
+        sudo apt-get install ccache git-lfs gnupg imagemagick libelf-dev libncurses5-dev libsdl1.2-dev rsync adb fastboot libstdc++6 gcc-multilib lld
         mkdir -p $GITHUB_WORKSPACE/kernel_workspace
         
     - name: Download LLVM
@@ -107,7 +107,6 @@ jobs:
         export LLVM=1
         export LLVM_IAS=1
         make -j$(nproc --all) CC=clang O=out ${{ env.KERNEL_CONFIG }} ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.CUSTOM_CMDS_B }} ${{ env.EXTRA_CMDS }}
-        fi
 
     - name: Check a kernel output files
       run: |
