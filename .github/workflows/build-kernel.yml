@@ -77,8 +77,8 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir LLVM-aosp
-        wget https://android.googlesource.com/toolchain/llvm-project/+archive/refs/heads/llvm-${{ env.CLANG_VERSION }}.tar.gz
-        tar -C LLVM-aosp/ -zxvf llvm-${{ env.CLANG_VERSION }}.tar.gz
+        wget https://android.googlesource.com/toolchain/llvm-project/+archive/refs/heads/${{ env.LLVM_BRANCH }}/llvm-${{ env.LLVM_VERSION }}.tar.gz
+        tar -C LLVM-aosp/ -zxvf llvm-${{ env.LLVM_VERSION }}.tar.gz
 
 
     - name: Download mkbootimg tools
@@ -105,9 +105,7 @@ jobs:
         export KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
         export LLVM=1
         export LLVM_IAS=1
-        export CLANG_TRIPLE="aarch64-linux-gnu-"
-        export CROSS_COMPILE="aarch64-linux-gnu-"
-        make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }}
+        make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.CUSTOM_CMDS_B }} ${{ env.EXTRA_CMDS }}
         fi
 
     - name: Check a kernel output files
