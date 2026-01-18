@@ -77,12 +77,12 @@ jobs:
     - name: Download LLVM
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        mkdir LLVM-21.1.0-Linux-ARM64
+        mkdir LLVM
         wget https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.0/LLVM-21.1.0-Linux-X64.tar.xz
-        tar -C LLVM-21.1.0-Linux-ARM64/ -xvJf LLVM-21.1.0-Linux-X64.tar.xz
-        echo 'export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM-21.1.0-Linux-ARM64/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
-        echo 'export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM-21.1.0-Linux-ARM64/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
-        echo 'export PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM-21.1.0-Linux-ARM64/bin:$PATH' >> ~/.bashrc
+        tar -C LLVM/ -xvJf LLVM-21.1.0-Linux-X64.tar.xz
+        echo 'export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM/LLVM-21.1.0-Linux-X64/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+        echo 'export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM/LLVM-21.1.0-Linux-X64/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+        echo 'export PATH=$GITHUB_WORKSPACE/kernel_workspace/LLVM/LLVM-21.1.0-Linux-X64/bin:$PATH' >> ~/.bashrc
         llvm-config --version
         clang --version
         llc --version
@@ -105,9 +105,9 @@ jobs:
     - name: Build kernel
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        export LD_LIBRARY_PATH="$GITHUB_WORKSPACE/kernel_workspace/LLVM-21.1.0-Linux-ARM64/lib64:$LD_LIBRARY_PATH"
-        export LD_LIBRARY_PATH="$GITHUB_WORKSPACE/kernel_workspace/LLVM-21.1.0-Linux-ARM64/lib:$LD_LIBRARY_PATH"
-        export PATH="$GITHUB_WORKSPACE/kernel_workspace/LLVM-21.1.0-Linux-ARM64/bin:$PATH"
+        export LD_LIBRARY_PATH="$GITHUB_WORKSPACE/kernel_workspace/LLVM/LLVM-21.1.0-Linux-X64/lib64:$LD_LIBRARY_PATH"
+        export LD_LIBRARY_PATH="$GITHUB_WORKSPACE/kernel_workspace/LLVM/LLVM-21.1.0-Linux-X64/lib:$LD_LIBRARY_PATH"
+        export PATH="$GITHUB_WORKSPACE/kernel_workspace/LLVM/LLVM-21.1.0-Linux-X64/bin:$PATH"
         export KBUILD_BUILD_HOST=Github-Action
         export KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
         export CC="clang"
